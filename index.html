@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Night of Jazz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, playful gift — a voucher you open, not a brochure
+   IDEA: three club posters pinned side by side, each a door into the real club
+   PICTURE: a real photo of each club that is itself the link to its official site
+   COLOUR and TYPE: warm paper or late-night ink; one flat colour per club; Big Shoulders + Inter
+   LAYOUT: short greeting, three tall poster cards, a pick bar at the end */
+:root{color-scheme:light dark;--bg:light-dark(#F7F3EC,#141110);--ink:light-dark(#17120F,#F3EEE6);--soft:light-dark(#5A5148,#B9AFA3);--card:light-dark(#FFFFFF,#1E1A18);--line:light-dark(#E2D9CB,#352E2A);--gold:light-dark(#9A5B00,#F2B35B)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(28px,4vw,64px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+h1,h2{font-family:'Big Shoulders Display',Impact,sans-serif;text-transform:uppercase;margin:0;line-height:.95}
+h1{font-size:clamp(52px,9vw,112px);font-weight:900;letter-spacing:-.005em}
+.lead{font-size:clamp(17px,2vw,20px);max-width:620px;margin:18px 0 0;color:var(--soft)}
+.hello{color:var(--gold);font-weight:600;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:clamp(28px,4vw,48px)}
+@media(max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.club{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease}
+.club.picked{box-shadow:0 0 0 3px var(--c),0 18px 40px -18px var(--c)}
+.pic{display:block;position:relative;aspect-ratio:4/3;background:var(--c);color:#fff;text-decoration:none;overflow:hidden}
+.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+@media(prefers-reduced-motion:no-preference){.pic:hover img{transform:scale(1.04)}}
+.pic .go{position:absolute;left:16px;bottom:14px;background:rgba(0,0,0,.55);color:#fff;font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px;backdrop-filter:blur(4px)}
+.pic:hover .go,.pic:focus-visible .go{background:#000}
+.pic:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:12px;flex:1}
+.where{font-size:14px;font-weight:600;color:var(--soft)}
+h2{font-size:40px;font-weight:900}
+h2 a{color:inherit;text-decoration:none}h2 a:hover{text-decoration:underline;text-decoration-thickness:2px}
+.vibe{margin:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0;list-style:none}
+.tags li{font-size:13px;font-weight:600;border:1.5px solid var(--line);border-radius:999px;padding:3px 10px}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:999px;font:600 15px Inter,sans-serif;text-decoration:none;cursor:pointer;border:2px solid var(--c);background:transparent;color:var(--ink)}
+.btn.solid{background:var(--c);color:#fff}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.pick[aria-pressed=true]{background:var(--c);color:#fff}
+.bar{margin-top:32px;border:2px dashed var(--line);border-radius:18px;padding:22px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between}
+.bar p{margin:0;font-size:18px;max-width:640px}
+.bar strong{font-family:'Big Shoulders Display',sans-serif;font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+#copy{--c:var(--ink)}
+#copied{font-size:14px;color:var(--soft);min-width:9em}
+footer{color:var(--soft);font-size:14px;text-align:center;padding-bottom:40px}
+@media(prefers-reduced-motion:no-preference){.club:hover{transform:translateY(-4px)}}
+@media(max-width:600px){h2{font-size:34px}.bar{padding:18px}}
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <p class="hello">Merry Christmas — this one's from me</p>
+    <h1>A night of jazz,<br>on me.</h1>
+    <p class="lead">Three Berlin jazz clubs, three different moods. Tap a picture to look around the club's own website and check their program. Then tell me which one (and which night) you like — I'll book it and we go together.</p>
+  </div>
+</header>
+
+<main class="band" style="padding-top:0">
+  <div class="wrap">
+    <div class="grid" id="grid"></div>
+
+    <div class="bar" aria-live="polite">
+      <p id="pickText">Nothing picked yet — tap <strong style="font-size:inherit;font-family:inherit;text-transform:none">“This one!”</strong> on your favourite.</p>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <button class="btn solid" id="copy" type="button" hidden>Copy a message for me</button>
+        <span id="copied"></span>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>Programs, prices and times live on each club's own site, so they're always up to date.</footer>
+
+<script>
+{
+const clubs=[
+ {id:'yorck',name:'Yorckschlösschen',where:'Kreuzberg · Yorckstraße 15',c:'#B23A0B',url:'https://www.yorckschloesschen.de/',prog:'https://www.yorckschloesschen.de/livemusik/',
+  vibe:'A classic old-Berlin corner pub with a stage, walls full of musician photos, hearty food and a crowd that ends up dancing.',
+  tags:['Swing','Blues & boogie','Soul & R&B','Dinner + show'],art:'pub'},
+ {id:'zigzag',name:'Zig Zag Jazz Club',where:'Friedenau · Hauptstraße 89',c:'#1F4FD1',url:'https://www.zigzag-jazzclub.berlin/',prog:'https://www.zigzag-jazzclub.berlin/programmneu',
+  vibe:'An intimate, award-winning concert club. Low lights, small tables and international bands just a few metres away.',
+  tags:['Modern jazz','Funk & groove','World & fusion','Seated concert'],art:'stage'},
+ {id:'bflat',name:'b-flat Jazzclub',where:'Mitte · near Hackescher Markt',c:'#5B2A86',url:'https://b-flat-berlin.de/',prog:'https://b-flat-berlin.de/programm',
+  vibe:'A late-night listening room with live jazz every night since 1995, great acoustics and good cocktails at the bar.',
+  tags:['Contemporary jazz','Vocal jazz','Jam sessions','Cocktails'],art:'bar'}
+];
+
+const photo={pub:'yorck.jpg',stage:'zigzag.jpg',bar:'bflat.jpg'};
+
+const grid=document.getElementById('grid');
+grid.innerHTML=clubs.map(k=>`
+ <article class="club" id="${k.id}" style="--c:${k.c}">
+  <a class="pic" href="${k.url}" target="_blank" rel="noopener" aria-label="Open the ${k.name} website"><img src="${photo[k.art]}" alt="Inside ${k.name}" loading="lazy"><span class="go">Visit ${k.name} ↗</span></a>
+  <div class="body">
+   <div class="where">${k.where}</div>
+   <h2><a href="${k.url}" target="_blank" rel="noopener">${k.name}</a></h2>
+   <p class="vibe">${k.vibe}</p>
+   <ul class="tags">${k.tags.map(t=>`<li>${t.replace('&','&amp;')}</li>`).join('')}</ul>
+   <div class="links">
+    <a class="btn" href="${k.prog}" target="_blank" rel="noopener">See the program ↗</a>
+    <button class="btn pick" type="button" data-id="${k.id}" aria-pressed="false">This one!</button>
+   </div>
+  </div>
+ </article>`).join('');
+
+let picked=null;
+try{picked=localStorage.getItem('jazzPick')}catch(e){}
+const pickText=document.getElementById('pickText'),copy=document.getElementById('copy'),copied=document.getElementById('copied');
+const msg=()=>{const k=clubs.find(x=>x.id===picked);return `I pick ${k.name}! The night I'd like: `};
+const render=()=>{
+ document.querySelectorAll('.pick').forEach(b=>{const on=b.dataset.id===picked;b.setAttribute('aria-pressed',on);b.textContent=on?'Picked ✓':'This one!';b.closest('.club').classList.toggle('picked',on)});
+ const k=clubs.find(x=>x.id===picked);
+ if(k){pickText.innerHTML=`Your pick: <strong>${k.name}</strong><br>Choose a night from their program and send it to me — I'll take care of the booking.`;copy.hidden=false}
+ else{pickText.textContent='Nothing picked yet — tap “This one!” on your favourite.';copy.hidden=true}
+ copied.textContent='';
+};
+grid.addEventListener('click',e=>{const b=e.target.closest('.pick');if(!b)return;picked=picked===b.dataset.id?null:b.dataset.id;try{picked?localStorage.setItem('jazzPick',picked):localStorage.removeItem('jazzPick')}catch(err){}render()});
+copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(msg());copied.textContent='Copied — paste it to me!'}catch(e){copied.textContent='Just tell me: “'+msg()+'…”'}});
+render();
+}
+</script>
+</body>
+</html>
