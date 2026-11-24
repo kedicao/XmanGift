@@ -51,7 +51,7 @@ h2 a{color:inherit;text-decoration:none}h2 a:hover{text-decoration:underline;tex
 #copied{font-size:14px;color:var(--soft);min-width:9em}
 .club{scroll-margin-top:24px;container-type:inline-size}
 .club h2{font-size:min(40px,10cqi);overflow-wrap:anywhere}
-.mapsec{margin-top:clamp(40px,6vw,72px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(24px,4vw,56px);align-items:center}
+.mapsec{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(24px,4vw,56px);align-items:center}
 @media(max-width:900px){.mapsec{grid-template-columns:minmax(0,1fr)}}
 .mapsec h2{font-size:clamp(40px,5vw,64px)}
 .mapsec .lead{margin-top:14px}
@@ -93,8 +93,6 @@ h2 a{color:inherit;text-decoration:none}h2 a:hover{text-decoration:underline;tex
 
 <main class="band" style="padding-top:0">
   <div class="wrap">
-    <div class="grid" id="grid"></div>
-
     <section class="mapsec" aria-labelledby="maph">
       <div>
         <h2 id="maph">Wo spielt die Musik?</h2>
@@ -102,10 +100,12 @@ h2 a{color:inherit;text-decoration:none}h2 a:hover{text-decoration:underline;tex
         <ul class="legend" id="legend"></ul>
       </div>
       <figure class="map">
-        <img src="map.jpg" width="2200" height="2475" alt="Stadtplan von Berlin mit U- und S-Bahn-Linien: b-flat in Mitte, das Yorckschlösschen in Kreuzberg und der Zig Zag Jazz Club in Friedenau" loading="lazy">
+        <img src="map.jpg" width="2200" height="2475" alt="Stadtplan von Berlin mit U- und S-Bahn-Linien: b-flat in Mitte, das Yorckschlösschen in Kreuzberg und der Zig Zag Jazz Club in Friedenau">
         <div id="spots"></div>
       </figure>
     </section>
+
+    <div class="grid" id="grid"></div>
 
     <div class="bar" aria-live="polite">
       <p id="pickText">Nothing picked yet — tap <strong style="font-size:inherit;font-family:inherit;text-transform:none">“This one!”</strong> on your favourite.</p>
